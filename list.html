@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>待办</title>
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+</head>
+
+<style>
+	body {
+		/* background: rgb(240, 240, 240); */
+		margin: 0;
+		padding: 0;
+	}
+
+	div,
+	p,
+	li,
+	h1,
+	h2 {
+		user-select: none;
+	}
+
+	header {
+		width: 100%;
+		min-height: 40px;
+		background-color: rgb(230, 230, 230);
+		box-shadow: 0px 8px 8px #888888;
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	header h2 {
+		margin: 0;
+		padding: 10px;
+	}
+
+	header p {
+		font-weight: bold;
+		padding: 3px 10px 3px 0px;
+	}
+
+	.main {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: flex-start;
+		margin-top: 15px;
+		min-height: 30vh;
+	}
+
+	.main>div {
+		width: 300px;
+		min-height: 200px;
+		box-shadow: 10px 10px 5px #888888;
+		border: 2px solid black;
+		margin: 20px;
+		padding: 20px;
+	}
+
+	.main>div h2 {
+		color: whitesmoke;
+		margin: 5px;
+	}
+
+
+	.list {
+		padding-left: 10px;
+	}
+
+	.countdown-list {
+		padding-left: 10px;
+	}
+
+	.countdown-list li {
+		padding-left: 10px;
+
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px;
+
+		max-width: 100%;
+		overflow-x: hidden;
+
+		color: whitesmoke;
+	}
+
+	.countdown-list li span:nth-of-type(2) {}
+
+	.countdown-list li button {
+		width: 22px;
+		height: 22px;
+		margin: 0;
+		padding: 0;
+		visibility: hidden;
+	}
+
+
+	.countdown-list li:hover {
+		background-color: #1116;
+	}
+
+	.countdown-list li:hover button {
+		visibility: visible;
+
+	}
+
+	.list li {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px;
+
+		color: whitesmoke;
+	}
+
+	.list li button {
+		width: 22px;
+		height: 22px;
+		margin: 0;
+		padding: 0;
+		visibility: hidden;
+	}
+
+
+
+	.list li:hover {
+		background-color: #1116;
+	}
+
+	.list li:hover button {
+		visibility: visible;
+
+	}
+
+	.main>div:nth-of-type(1) {
+		background-color: rgb(171, 123, 123);
+	}
+
+	.main>div:nth-of-type(2) {
+		background-color: rgb(130, 179, 134);
+	}
+
+	.main>div:nth-of-type(3) {
+		background-color: rgb(114, 142, 171);
+	}
+
+	.main>div:nth-of-type(4) {
+		background-color: rgb(97, 97, 97);
+	}
+
+	.main>div:nth-of-type(5) {
+		background-color: rgb(131, 104, 129);
+	}
+
+	.main>div:nth-of-type(6) {
+		background-color: rgb(99, 97, 67);
+	}
+
+	.main>div:nth-of-type(7) {
+		background-color: rgb(108, 180, 150);
+	}
+
+	.add-input {
+		margin: 25px auto 10px auto;
+		/* padding: 5px; */
+		width: 485px;
+		min-height: 82px;
+
+		/* overflow: hidden; */
+
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+
+
+	}
+
+	.add-input from {}
+
+
+	.add-input input[type=text] {
+		width: 300px;
+		height: 71px;
+		background-color: #e6e6e6;
+		outline: none;
+		border: none;
+		border-radius: 15px 0 0 15px;
+		margin: 20px 0 20px 20px;
+		padding: 5px 1px 5px 10px;
+		/* box-shadow: 5px 5px 5px #333; */
+	}
+
+	.add-input select {
+		border: none;
+		box-sizing: border-box;
+		background-color: #e6e6e6;
+		width: 62px;
+		height: 81px;
+		margin: 0;
+		outline: none;
+
+		position: relative;
+		left: -5px;
+		top: 1px;
+	}
+
+	.add-input select:hover {
+		background: #d0d0d0;
+	}
+
+	.add-input button {
+		border: none;
+		box-sizing: border-box;
+		background: #e6e6e6;
+		height: 81px;
+		width: 80px;
+		padding: 5px 1px 5px 10px;
+		position: relative;
+		left: -10px;
+		top: 1px;
+		outline: none;
+
+		border-radius: 0px 15px 15px 0px;
+	}
+
+	.add-input button:hover {
+		background: #d0d0d0;
+	}
+
+	.add-input input[type=date] {
+		padding: 10px;
+		background: #e6e6e6;
+		border: none;
+		outline: none;
+		height: 60px;
+	}
+
+	.add-input input[type=date]:hover {
+		background: #d0d0d0;
+	}
+
+	#add-countdown-btn {
+		border: none;
+		box-sizing: border-box;
+		background: #e6e6e6;
+		height: 81px;
+		width: 80px;
+		padding: 5px 1px 5px 10px;
+		position: relative;
+		left: -10px;
+		top: 1px;
+		outline: none;
+
+		border-radius: 0px 15px 15px 0px;
+	}
+
+	#add-countdown-btn:hover {
+		background: #d0d0d0;
+	}
+
+	footer {
+		min-height: 100px;
+		padding: 40px;
+		background-color: #555;
+
+	}
+
+	footer p {
+		color: white;
+		margin: 25px;
+	}
+
+	footer a {
+		color: whitesmoke;
+	}
+</style>
+
+<body>
+	<header>
+		<h2>孤山的待办列表(人生仪表盘0.1)</h2>
+		<p id="time"></p>
+	</header>
+
+	<div class="add-input">
+		<form action="">
+			<input type="text" name="" id="content" placeholder="输入后点击按钮添加事项">
+			<select name="" id="typeSelect">
+				<option value="0">待办</option>
+				<option value="1">甜点</option>
+				<option value="2">问题</option>
+				<option value="3">输入</option>
+				<option value="4">输出</option>
+				<option value="5">习惯</option>
+			</select>
+			<button type="button" id="add-btn">添加</button>
+		</form>
+	</div>
+
+	<div class="add-input">
+		<input type="text" name="cdtext" id="countdown-content" placeholder="输入后确认日期添加倒计时">
+		<input type="date" name="cddate" id="countdown-date">
+		<button type="button" id="add-countdown-btn">添加</button>
+
+	</div>
+
+	<div class="main">
+		<div class="countdown">
+			<h2>倒计时</h2>
+			<ul class="countdown-list">
+				
+			</ul>
+
+		</div>
+
+
+		<!-- 待办事项 -->
+		<div class="todo-list">
+			<h2>待办</h2>
+			<ul class="list">
+
+			</ul>
+
+		</div>
+
+		<!-- 正在输入或准备输入的内容，包括书籍、视频等，或者一些整理等小事情-->
+		<div class="dessert-list">
+			<h2>甜点</h2>
+			<ul class="list">
+
+			</ul>
+		</div>
+
+		<!-- 没事可以琢磨琢磨的问题 -->
+		<div class="question-list">
+			<h2>问题</h2>
+			<ul class="list">
+
+			</ul>
+		</div>
+
+		<!-- 习惯 -->
+		<div class="habit-list">
+			<h2>输入</h2>
+
+			<ul class="list">
+
+			</ul>
+		</div>
+
+		<div class="low-input-list">
+			<h2>输出</h2>
+			<ul class="list">
+
+			</ul>
+		</div>
+
+		<div class="low-output-list">
+			<h2>习惯</h2>
+			<ul class="list">
+
+			</ul>
+		</div>
+	</div>
+
+
+	<footer>
+		<p>
+			行动清单；可以立即开始的行动，很多由较大的任务拆分开来。
+		</p>
+		<p>
+			问题清单：需要在脑海中构思，筹划，而不是通过行动去解决的任务
+		</p>
+
+		<p>
+			甜品清单：不需要动脑，简单、没有时间限制的小事。比如整理东西，收集素材
+		</p>
+
+		<p>
+			低输入（清单）：空闲时间娱乐性质的输入。
+		</p>
+
+		<p>
+			低输出（清单）：空闲时间的随意思考、创作。
+		</p>
+
+		<p>参考了 打开心智 这本书</p>
+		<p>
+			<a href="https://www.gushan233.com">主站</a>
+		</p>
+
+	</footer>
+</body>
+
+
+<script>
+	var listd = document.getElementsByClassName("list");
+	var timed = document.getElementById("time");
+	var countdownlistd = document.getElementsByClassName("countdown-list")[0];
+
+	var lists = [];
+	var countdownList = [{ id: 1, content: "cccs", end_date: "2023-08-02" }];
+	var self = this;
+
+	function refresh() {
+		var now = new Date();
+		timed.textContent = now.getFullYear() + "年" + (now.getMonth()+1) + "月" + now.getDate() + "日";
+
+		var request = new XMLHttpRequest();
+		request.open('post', 'http://139.196.218.209/list/select.php');
+		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.send();
+
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && (request.status == 200 || request.status == 304)) {
+				var data = JSON.parse(request.responseText)
+
+				// console.log(data);
+				lists = data
+				updateView()
+
+			}
+		}
+
+
+	}
+
+	function updateView() {
+		function clear() {
+			for (let z = 0; z < listd.length; z++) {
+				listd[z].innerHTML = "";
+				console.log(listd[z])
+			}
+		}
+
+		clear()
+
+		for (let i = 0; i < lists.length; i++) {
+			// console.log(data[i].id)
+			var li = document.createElement('li');
+			li.lid = lists[i].id
+			var span = document.createElement('span');
+			var btn = document.createElement('button');
+			btn.setAttribute('type', 'button');
+			btn.innerText = "x"
+			btn.onclick = function () {
+				self.delTerm(lists[i].id)
+			};
+
+			span.innerText = lists[i].content;
+			li.appendChild(span);
+			li.appendChild(btn);
+
+
+			// console.log(lists[i])
+			switch (lists[i].type) {
+				case "0":
+					listd[0].appendChild(li);
+					break;
+
+				case "1":
+					listd[1].appendChild(li);
+					break;
+
+				case "2":
+					listd[2].appendChild(li);
+					break;
+
+				case "3":
+					listd[3].appendChild(li);
+					break;
+				case "4":
+					listd[4].appendChild(li);
+					break;
+				case "5":
+					listd[5].appendChild(li);
+					break;
+			}
+		}
+	}
+
+	function delTerm(id) {
+		var request = new XMLHttpRequest();
+		request.open('get', 'http://139.196.218.209/list/del.php?id=' + id);
+		//request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+		request.send();
+
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && (request.status == 200 || request.status == 304)) {
+				if (request.responseText == 1) {
+					console.log(request.responseText)
+					let lis = document.querySelectorAll('.list li')
+					for (let a = 0; a < lis.length; a++) {
+						if (lis[a].lid === id) {
+							lis[a].remove();
+						}
+					}
+				} else {
+					updateView()
+				}
+
+			}
+		}
+	}
+
+	function addTerm(content, type) {
+		var request = new XMLHttpRequest();
+		request.open('get', String('http://139.196.218.209/list/add.php?content=' + content + '&type=' + type));
+		// request.open('get','add.php')
+		request.send();
+
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && (request.status == 200 || request.status == 304)) {
+				updateCountdownView()
+				refresh()
+				// if(request.responseText==1){
+				// 	updateView()
+				// 	refresh()
+				// }else{
+				// 	updateView()
+				// }
+
+			}
+		}
+	}
+
+
+	function addCountdown(cddate, cont) {
+		var request = new XMLHttpRequest();
+
+		request.open('get', 'http://139.196.218.209/list/countdownOperate.php?type=a&cddate='+cddate+'&content='+cont);
+		// request.open('get','add.php')
+		request.send();
+
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && (request.status == 200 || request.status == 304)) {
+					console.log(request)
+				
+					updateCountdownView();
+				
+			}
+		}
+	}
+
+	function delCountdown(id) {
+		var request = new XMLHttpRequest();
+		request.open('get', String('http://139.196.218.209/list/countdownOperate.php?type=d&id=' + id));
+
+		request.send();
+
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && (request.status == 200 || request.status == 304)) {
+				if (request.responseText == 1) {
+					let lisc = countdownlistd.getElementsByTagName('li')
+					for (let a = 0; a < lisc.length; a++) {
+						if (lisc[a].lid === id) {
+							lisc[a].remove();
+						}
+					}
+				}
+
+			}
+		}
+
+	}
+
+	function upcdView() {
+		
+
+			countdownlistd.innerHTML = "";
+			for (let i = 0; i < countdownList.length; i++) {
+				// console.log(data[i].id)
+				
+
+				
+				var now = new Date(new Date().toLocaleDateString());
+				var beforeTime = Date.parse(countdownList[i].end_time)
+				var day = (new Date(beforeTime).getTime()) - now.getTime()
+				var tdate = Math.floor(day / (1000 * 3600 * 24))
+				//超过天数时自动清除
+				if (tdate < 0) {
+					delCountdown(countdownList[i].id);
+					continue;
+				}
+				console.log(countdownList[i].end_time)
+
+				var li = document.createElement('li');
+				li.lid = countdownList[i].id;
+				var span = document.createElement('span');
+				var span2 = document.createElement('span');
+				var btn = document.createElement('button');
+				btn.setAttribute('type', 'button');
+				btn.innerText = "x"
+				btn.onclick = function () {
+					self.delCountdown(countdownList[i].id)
+				};
+				
+				span.innerText = countdownList[i].content;
+				span2.innerText = tdate + "天";
+
+				li.appendChild(span);
+				li.appendChild(span2);
+				li.appendChild(btn);
+
+				
+				countdownlistd.appendChild(li)
+			}
+		}
+
+	function updateCountdownView() {
+		var request = new XMLHttpRequest();
+		request.open('get', 'http://139.196.218.209/list/countdownOperate.php?type=s');
+		//request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.send();
+
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && (request.status == 200 || request.status == 304)) {
+				self.countdownList =  JSON.parse(request.responseText)
+				upcdView()
+			}
+		}
+
+
+	}
+
+	window.onload = function () {
+
+		refresh()
+		updateCountdownView()
+
+		document.getElementById("add-btn").onclick = function () {
+			var content = document.getElementById("content");
+			var type = document.getElementById("typeSelect");
+
+			addTerm(content.value, type.value)
+			content.value = ""
+
+			console.log("content:" + content.value)
+		}
+
+		document.getElementById("add-countdown-btn").onclick = function () {
+			var cont = document.getElementById("countdown-content");
+			var cddate = document.getElementById("countdown-date");
+
+			if(!cddate.value || !cont.value){
+				alert("有内容未填写")
+				return;
+			}
+
+			var timepp=new Date(Date.parse(cddate.value))
+			if(timepp<=new Date().getTime()){
+				alert("设置了过去的或今天的日期，请往后设置！")
+				return
+			}
+			
+			addCountdown(cddate.value, cont.value)
+			cont.value=""
+			cddate.value=null;
+			var cddate = document.getElementById("countdown-date");
+			
+		}
+	}
+
+
+</script>
+
+</html>
